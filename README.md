@@ -84,6 +84,7 @@ my-life-in-data/
 ├── dbt/                # dbt project: Silver → Gold marts
 ├── notebooks/          # Exploratory analysis & year-in-review
 ├── terraform/          # IaC for S3 buckets, IAM, Glue jobs
+├── scripts/            # One-shot helpers (OAuth flows, backfills)
 ├── docs/               # Architecture deep-dive
 └── docker-compose.yml  # Local Airflow stack
 ```
