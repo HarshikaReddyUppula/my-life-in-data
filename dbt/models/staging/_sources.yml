@@ -1,0 +1,36 @@
+version: 2
+
+sources:
+  - name: raw
+    database: MY_LIFE
+    schema: RAW
+    description: External tables / Snowpipe-loaded tables landed from S3 Silver.
+    freshness:
+      warn_after: { count: 24, period: hour }
+      error_after: { count: 48, period: hour }
+    loaded_at_field: played_at
+
+    tables:
+      - name: spotify_listening_history
+        description: One row per track play. Grain = (played_at, track_id).
+        columns:
+          - name: played_at
+            description: UTC timestamp the track started playing.
+            tests:
+              - not_null
+          - name: track_id
+            description: Spotify track ID.
+            tests:
+              - not_null
+          - name: duration_ms
+            tests:
+              - not_null
+
+      - name: github_events
+        description: One row per public GitHub event.
+        columns:
+          - name: id
+            tests: [not_null, unique]
+
+      - name: google_calendar_events
+        description: One row per calendar event occurrence.
